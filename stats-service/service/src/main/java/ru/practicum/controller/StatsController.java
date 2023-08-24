@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.Constant;
 import ru.practicum.dto.HitDto;
-import ru.practicum.model.ViewStat;
+import ru.practicum.model.StatsDto;
 import ru.practicum.service.HitService;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public List<ViewStat> getAll(@DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime start,
+    public List<StatsDto> getAll(@DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime start,
                                  @DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime end,
                                  @RequestParam(required = false) List<String> uris,
                                  @RequestParam(defaultValue = "false") boolean unique) {
