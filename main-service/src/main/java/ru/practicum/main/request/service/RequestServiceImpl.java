@@ -56,7 +56,8 @@ public class RequestServiceImpl implements RequestService {
     public ParticipationRequestDto update(Long userId, Long requestId) {
         if (!userRepository.existsById(userId)) throw new NotFoundException("Не найден пользователь с id = " + userId);
         Request request = requestRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Не найден запрос с id = " + requestId));
-        if (!request.getRequester().getId().equals(userId)) throw new NotFoundException("Не найден запрос с id = " + requestId);
+        if (!request.getRequester().getId().equals(userId))
+            throw new NotFoundException("Не найден запрос с id = " + requestId);
         request.setStatus(Constant.StateParticipation.CANCELED);
         return RequestMapper.toParticipationDto(requestRepository.save(request));
     }

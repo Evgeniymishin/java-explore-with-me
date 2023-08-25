@@ -35,7 +35,8 @@ public class PublicEventServiceImpl extends EventService implements PublicEventS
 
     public EventFullDto get(Long eventId, HttpServletRequest servletRequest) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException("Не найден пользователь с id = " + eventId));
-        if (event.getState() != Constant.State.PUBLISHED) throw new NotFoundException("Не найден пользователь с id = " + eventId);
+        if (event.getState() != Constant.State.PUBLISHED)
+            throw new NotFoundException("Не найден пользователь с id = " + eventId);
         sendViews(servletRequest);
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(List.of(event));
         Map<Long, Long> views = getStats(List.of(event));

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.practicum.main.event.dto.EventRequestByParams;
 import ru.practicum.main.event.model.Event;
-import ru.practicum.main.request.model.Request;
 import ru.practicum.main.user.model.User;
 
 import java.util.List;
