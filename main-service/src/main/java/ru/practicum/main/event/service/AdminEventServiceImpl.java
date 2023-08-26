@@ -62,7 +62,9 @@ public class AdminEventServiceImpl extends EventService implements AdminEventSer
     @Transactional(readOnly = true)
     public List<EventFullDto> getAll(EventRequestByParams request) {
         List<Event> events = eventRepository.findAllByRequest(request);
-        if (events.size() == 0) return new ArrayList<>();
+        if (events.size() == 0) {
+            return new ArrayList<>();
+        }
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getStats(events);
         return events.stream().map(event -> EventMapper.toFullEventDto(

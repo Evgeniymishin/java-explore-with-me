@@ -11,10 +11,8 @@ import ru.practicum.main.user.model.User;
 import java.util.List;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event, Long> {
+public interface EventRepository extends JpaRepository<Event, Long>, CustomEventRepository {
     List<Event> findEventsByCategoryId(Long categoryId);
 
     Page<Event> findEventsByInitiator(User user, Pageable pageable);
-
-    List<Event> findAllByRequest(EventRequestByParams request);
 }
