@@ -51,7 +51,9 @@ public class PublicEventServiceImpl extends EventService implements PublicEventS
         }
         sendViews(servletRequest);
         List<Event> events = eventRepository.findAllByRequest(request);
-        if (events.size() == 0) return new ArrayList<>();
+        if (events.size() == 0) {
+            return new ArrayList<>();
+        }
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getStats(events);
         return events.stream().map(event -> EventMapper.toFullEventDto(
