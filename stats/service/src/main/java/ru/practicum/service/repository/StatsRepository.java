@@ -27,9 +27,10 @@ public interface StatsRepository extends JpaRepository<Hit, Long> {
     @Query(value = "SELECT s.app, s.uri, count(s.ip) as hits " +
             "FROM stats s " +
             "WHERE s.uri in :uris AND s.timestamp BETWEEN :start AND :end " +
-            "GROUP BY s.uri, s.app",
+            "GROUP BY s.uri, s.app" +
+            "ORDER BY DESC",
             nativeQuery = true)
-    List<Stats> findByTimestampBetweenAndUriIn(LocalDateTime start, LocalDateTime end, List<String> uris);
+    List<Stats> findByTimestampBetweenAndUriInOrderByDesc(LocalDateTime start, LocalDateTime end, List<String> uris);
 
     @Query(value = "SELECT s.app, s.uri, count(s.ip) as hits " +
             "FROM stats s " +

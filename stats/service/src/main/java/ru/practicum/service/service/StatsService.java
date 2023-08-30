@@ -34,7 +34,7 @@ public class StatsService {
                     repository.findByTimestampBetweenAndUriInDistinct(start, end, uris);
         } else {
             stats = uris == null || uris.isEmpty() ? repository.findByTimestampBetween(start, end) :
-                    repository.findByTimestampBetweenAndUriIn(start, end, uris);
+                    repository.findByTimestampBetweenAndUriInOrderByDesc(start, end, uris);
         }
         return stats.stream().map(s -> new ViewStat(s.getApp(), s.getUri(), s.getHits()))
                 .collect(Collectors.toList());
