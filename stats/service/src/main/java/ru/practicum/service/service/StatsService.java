@@ -11,6 +11,7 @@ import ru.practicum.service.model.Stats;
 import ru.practicum.service.repository.StatsRepository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,9 +35,10 @@ public class StatsService {
                     repository.findByTimestampBetweenAndUriInDistinct(start, end, uris);
         } else {
             stats = uris == null || uris.isEmpty() ? repository.findByTimestampBetween(start, end) :
-                    repository.findByTimestampBetweenAndUriInOrderByDesc(start, end, uris);
+                    repository.findByTimestampBetweenAndUriIn(start, end, uris);
         }
         return stats.stream().map(s -> new ViewStat(s.getApp(), s.getUri(), s.getHits()))
+                .sorted(Comparator.comparingLong(ViewStat::getHits).reversed())
                 .collect(Collectors.toList());
     }
 

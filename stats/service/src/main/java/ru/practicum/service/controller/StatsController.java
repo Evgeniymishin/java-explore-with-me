@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Validated
 public class StatsController {
 
     private final StatsService service;
@@ -26,6 +25,7 @@ public class StatsController {
         return service.create(endPointHit);
     }
 
+    @Validated
     @GetMapping("/stats")
     public List<ViewStat> getAll(@RequestParam @DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime start,
                                  @RequestParam @DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime end,

@@ -1,5 +1,6 @@
 package ru.practicum.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.practicum.Constant;
@@ -25,6 +26,7 @@ public class EndPointHit {
     private String uri;
     @NotNull
     private String ip;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constant.DATEFORMAT)
     @DateTimeFormat(pattern = Constant.DATEFORMAT)
     private LocalDateTime timestamp;
 }
