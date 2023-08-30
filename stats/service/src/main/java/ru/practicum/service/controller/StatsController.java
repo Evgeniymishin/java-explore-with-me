@@ -3,6 +3,7 @@ package ru.practicum.service.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.Constant;
 import ru.practicum.dto.EndPointHit;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 public class StatsController {
 
     private final StatsService service;
@@ -25,8 +27,8 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public List<ViewStat> getAll(@DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime start,
-                                 @DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime end,
+    public List<ViewStat> getAll(@RequestParam @DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime start,
+                                 @RequestParam @DateTimeFormat(pattern = Constant.DATEFORMAT) LocalDateTime end,
                                  @RequestParam(required = false) List<String> uris,
                                  @RequestParam(defaultValue = "false") boolean unique) {
         return service.getAll(start, end, uris, unique);

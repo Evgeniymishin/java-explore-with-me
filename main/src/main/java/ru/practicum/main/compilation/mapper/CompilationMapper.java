@@ -1,5 +1,6 @@
 package ru.practicum.main.compilation.mapper;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.main.compilation.dto.CompilationDto;
 import ru.practicum.main.compilation.dto.NewCompilationDto;
 import ru.practicum.main.compilation.dto.UpdateCompilationRequest;
@@ -8,11 +9,12 @@ import ru.practicum.main.event.mapper.EventMapper;
 import ru.practicum.main.event.model.Event;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class CompilationMapper {
-    public static Compilation toCompilation(NewCompilationDto newCompilationDto, List<Event> events) {
+    public static Compilation toCompilation(NewCompilationDto newCompilationDto, Set<Event> events) {
         return Compilation
                 .builder()
                 .title(newCompilationDto.getTitle())
@@ -33,7 +35,7 @@ public class CompilationMapper {
                 .build();
     }
 
-    public static Compilation toCompilationUpdated(Compilation compilation, UpdateCompilationRequest request, List<Event> events) {
+    public static Compilation toCompilationUpdated(Compilation compilation, UpdateCompilationRequest request, Set<Event> events) {
         return Compilation
                 .builder()
                 .id(compilation.getId())

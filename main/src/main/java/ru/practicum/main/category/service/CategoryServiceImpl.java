@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public void delete(Long categoryId) {
-        if (!eventRepository.findEventsByCategoryId(categoryId).isEmpty())
+        if (eventRepository.existsByCategoryId(categoryId))
             throw new ConflictException("Невозможно удалить категорию, в которой есть созданные события.");
         categoryRepository.delete(categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException("Не найдена категория с id " + categoryId)));
     }

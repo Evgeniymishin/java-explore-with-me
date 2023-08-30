@@ -2,17 +2,21 @@ package ru.practicum.main.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.main.user.dto.NewUserRequest;
 import ru.practicum.main.user.dto.UserDto;
 import ru.practicum.main.user.service.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/admin/users")
+@Validated
 public class UserController {
     private final UserService service;
 
@@ -30,8 +34,8 @@ public class UserController {
 
     @GetMapping
     List<UserDto> getAll(@RequestParam(required = false) List<Long> ids,
-                         @RequestParam(defaultValue = "0") int from,
-                         @RequestParam(defaultValue = "10") int size) {
+                         @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                         @RequestParam(defaultValue = "10") @Positive int size) {
         return service.getAll(ids, from, size);
     }
 }

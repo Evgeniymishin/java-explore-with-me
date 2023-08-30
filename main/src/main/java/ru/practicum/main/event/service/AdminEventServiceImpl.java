@@ -19,9 +19,7 @@ import ru.practicum.main.exception.ValidationException;
 import ru.practicum.main.request.repository.RequestRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,7 +62,7 @@ public class AdminEventServiceImpl extends EventService implements AdminEventSer
     public List<EventFullDto> getAll(EventRequestByParams request) {
         List<Event> events = eventRepository.findAllByRequest(request);
         if (events.size() == 0) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getStats(events);

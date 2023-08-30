@@ -6,6 +6,7 @@ import ru.practicum.Constant;
 import ru.practicum.main.event.model.Location;
 
 import javax.validation.constraints.Future;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 public class UpdateEventRequest {
     private Long category;
     private Location location;
+    @PositiveOrZero
     private Integer participantLimit;
     private Boolean paid;
     private Boolean requestModeration;

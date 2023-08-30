@@ -3,7 +3,8 @@ package ru.practicum.main.request.dto;
 import lombok.*;
 import ru.practicum.Constant;
 
-import java.util.List;
+import java.util.Set;
+
 
 @Getter
 @Setter
@@ -11,6 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class EventRequestStatusUpdateRequest {
-    private List<Long> requestIds;
+    private Set<Long> requestIds;
     private Constant.StateParticipation status;
 }
+
+
+

@@ -15,10 +15,7 @@ import ru.practicum.main.exception.ValidationException;
 import ru.practicum.main.request.repository.RequestRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +49,7 @@ public class PublicEventServiceImpl extends EventService implements PublicEventS
         sendViews(servletRequest);
         List<Event> events = eventRepository.findAllByRequest(request);
         if (events.size() == 0) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getStats(events);

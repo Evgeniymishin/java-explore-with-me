@@ -40,7 +40,7 @@ public class RequestServiceImpl implements RequestService {
             throw new ConflictException("Нельзя отправить запрос повторно.");
         }
         if (event.getParticipantLimit() != 0 && event.getParticipantLimit() ==
-                requestRepository.findAllEventRequestsByEventAndStatus(event, Constant.StateParticipation.CONFIRMED).size()) {
+                requestRepository.countEventRequestsByEventAndStatus(event, Constant.StateParticipation.CONFIRMED)) {
             throw new ConflictException("Нет доступных мест для участия в этом событии");
         }
         Request request = Request

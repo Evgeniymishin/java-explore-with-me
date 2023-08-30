@@ -11,7 +11,6 @@ import ru.practicum.service.model.Stats;
 import ru.practicum.service.repository.StatsRepository;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +27,6 @@ public class StatsService {
 
     @Transactional(readOnly = true)
     public List<ViewStat> getAll(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
-        if (start == null || end == null)
-            throw new ValidateException("Отсутствует дата начала или окончания диапазона поиска.");
         if (end.isBefore(start)) throw new ValidateException("Время старта поиска не может быть позже времени окончания.");
         List<Stats> stats;
         if (unique) {
@@ -40,7 +37,6 @@ public class StatsService {
                     repository.findByTimestampBetweenAndUriIn(start, end, uris);
         }
         return stats.stream().map(s -> new ViewStat(s.getApp(), s.getUri(), s.getHits()))
-                .sorted(Comparator.comparingLong(ViewStat::getHits).reversed())
                 .collect(Collectors.toList());
     }
 

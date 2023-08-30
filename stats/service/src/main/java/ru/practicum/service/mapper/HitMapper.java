@@ -1,5 +1,6 @@
 package ru.practicum.service.mapper;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.Constant;
 import ru.practicum.dto.EndPointHit;
 import ru.practicum.service.model.Hit;
@@ -7,6 +8,7 @@ import ru.practicum.service.model.Hit;
 
 import java.time.LocalDateTime;
 
+@UtilityClass
 public class HitMapper {
 
     public static Hit toHit(EndPointHit endPointHit) {

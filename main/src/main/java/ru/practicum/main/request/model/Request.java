@@ -21,7 +21,7 @@ public class Request {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "event_id", referencedColumnName = "id")
-    Event event;
+    private Event event;
     @ManyToOne
     @JoinColumn(name = "requester_id", referencedColumnName = "id")
     private User requester;

@@ -5,7 +5,7 @@ import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,5 +18,5 @@ public class NewCompilationDto {
     private String title;
     private boolean pinned;
     @Nullable
-    private List<Long> events;
+    private Set<Long> events;
 }

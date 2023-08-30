@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,5 +16,5 @@ public class UpdateCompilationRequest {
     private String title;
     private Boolean pinned;
     @Nullable
-    private List<Long> events;
+    private Set<Long> events;
 }

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.ApiError;
-import ru.practicum.Constant;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +17,6 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleStatsException(ValidateException e) {
         log.warn(e.getMessage());
-        return new ApiError(e.getMessage(), "Действие невозможно.", HttpStatus.BAD_REQUEST.getReasonPhrase(), LocalDateTime.now().format(Constant.FORMATTER));
+        return new ApiError(e.getMessage(), "Действие невозможно.", HttpStatus.BAD_REQUEST.getReasonPhrase(), LocalDateTime.now());
     }
 }

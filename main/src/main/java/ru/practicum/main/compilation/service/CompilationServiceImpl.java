@@ -12,7 +12,7 @@ import ru.practicum.main.compilation.repository.CompilationRepository;
 import ru.practicum.main.event.repository.EventRepository;
 import ru.practicum.main.exception.NotFoundException;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +25,7 @@ public class CompilationServiceImpl implements CompilationService {
 
     public CompilationDto create(NewCompilationDto newCompilationDto) {
         return CompilationMapper.toCompilationDto(compilationRepository.save(CompilationMapper.toCompilation(newCompilationDto,
-                newCompilationDto.getEvents() == null ? new ArrayList<>() : eventRepository.findAllById(newCompilationDto.getEvents()))));
+                newCompilationDto.getEvents() == null ? new HashSet<>() : new HashSet<>(eventRepository.findAllById(newCompilationDto.getEvents())))));
     }
 
     public void delete(Long compilationId) {
@@ -36,7 +36,7 @@ public class CompilationServiceImpl implements CompilationService {
         return CompilationMapper.toCompilationDto(compilationRepository.save(CompilationMapper.toCompilationUpdated(
                 compilationRepository.findById(compilationId).orElseThrow(() -> new NotFoundException("Не найдена подборка с id = " + compilationId)),
                 request,
-                request.getEvents() == null ? new ArrayList<>() : eventRepository.findAllById(request.getEvents())
+                request.getEvents() == null ? new HashSet<>() : new HashSet<>(eventRepository.findAllById(request.getEvents()))
         )));
     }
 
@@ -46,10 +46,16 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Transactional(readOnly = true)
-    public List<CompilationDto> getAll(boolean pinned, int from, int size) {
-        return compilationRepository.findCompilationsByPinned(pinned, PageRequest.of(from / size, size)).stream()
-                .map(CompilationMapper::toCompilationDto)
-                .collect(Collectors.toList());
+    public List<CompilationDto> getAll(Boolean pinned, int from, int size) {
+        if (pinned == null) {
+            return compilationRepository.findAll(PageRequest.of(from / size, size)).stream()
+                    .map(CompilationMapper::toCompilationDto)
+                    .collect(Collectors.toList());
+        } else {
+            return compilationRepository.findCompilationsByPinned(pinned, PageRequest.of(from / size, size)).stream()
+                    .map(CompilationMapper::toCompilationDto)
+                    .collect(Collectors.toList());
+        }
     }
 
 }

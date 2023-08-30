@@ -2,6 +2,7 @@ package ru.practicum.main.event.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.main.event.dto.EventFullDto;
 import ru.practicum.main.event.dto.EventShortDto;
@@ -13,11 +14,14 @@ import ru.practicum.main.request.dto.EventRequestStatusUpdateResult;
 import ru.practicum.main.request.dto.ParticipationRequestDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/users/{userId}/events")
+@Validated
 public class PrivateEventController {
     private final PrivateEventService service;
 
@@ -50,8 +54,8 @@ public class PrivateEventController {
 
     @GetMapping
     List<EventShortDto> getAll(@PathVariable Long userId,
-                               @RequestParam(defaultValue = "0") int from,
-                               @RequestParam(defaultValue = "10") int size) {
+                               @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                               @RequestParam(defaultValue = "10") @Positive int size) {
         return service.getAll(userId, from, size);
     }
 
