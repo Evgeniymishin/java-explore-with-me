@@ -11,6 +11,7 @@ import ru.practicum.main.event.dto.EventShortDto;
 import ru.practicum.main.event.dto.NewEventDto;
 import ru.practicum.main.event.dto.UpdateEventRequest;
 import ru.practicum.main.event.mapper.EventMapper;
+import ru.practicum.main.event.mapper.LocationMapper;
 import ru.practicum.main.event.model.Event;
 import ru.practicum.main.event.repository.EventRepository;
 import ru.practicum.main.event.repository.LocationRepository;
@@ -43,7 +44,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         return EventMapper.toFullEventDto(eventRepository.save(EventMapper.toEvent(
                 newEventDto,
                 categoryRepository.findById(newEventDto.getCategory()).orElseThrow(() -> new NotFoundException("Не найдена категория с id = " + newEventDto.getCategory())),
-                locationRepository.save(newEventDto.getLocation()),
+                locationRepository.save(LocationMapper.toLocation(newEventDto.getLocation())),
                 userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Не найден пользователь с id = " + userId)))));
     }
 
@@ -57,7 +58,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         return EventMapper.toFullEventDto(eventRepository.save(EventMapper.toEventUpdated(event,
                 request,
                 request.getCategory() == null ? event.getCategory() : categoryRepository.findById(request.getCategory()).get(),
-                request.getLocation() == null ? event.getLocation() : locationRepository.save(request.getLocation()))
+                request.getLocation() == null ? event.getLocation() : locationRepository.save(LocationMapper.toLocation(request.getLocation())))
         ));
     }
 

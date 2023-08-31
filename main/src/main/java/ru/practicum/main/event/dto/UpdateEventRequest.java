@@ -3,7 +3,6 @@ package ru.practicum.main.event.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.Constant;
-import ru.practicum.main.event.model.Location;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.PositiveOrZero;
@@ -17,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 public class UpdateEventRequest {
     private Long category;
-    private Location location;
+    private LocationDto location;
     @PositiveOrZero
     private Integer participantLimit;
     private Boolean paid;

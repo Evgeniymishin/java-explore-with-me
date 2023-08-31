@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @UtilityClass
 public class RequestMapper {
-    public static ParticipationRequestDto toParticipationDto(Request request) {
+    public ParticipationRequestDto toParticipationDto(Request request) {
         return ParticipationRequestDto
                 .builder()
                 .id(request.getId())

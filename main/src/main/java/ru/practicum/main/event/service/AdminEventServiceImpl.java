@@ -10,6 +10,7 @@ import ru.practicum.main.event.dto.EventFullDto;
 import ru.practicum.main.event.dto.EventRequestByParams;
 import ru.practicum.main.event.dto.UpdateEventRequest;
 import ru.practicum.main.event.mapper.EventMapper;
+import ru.practicum.main.event.mapper.LocationMapper;
 import ru.practicum.main.event.model.Event;
 import ru.practicum.main.event.repository.EventRepository;
 import ru.practicum.main.event.repository.LocationRepository;
@@ -50,7 +51,7 @@ public class AdminEventServiceImpl extends EventService implements AdminEventSer
                 event,
                 request,
                 request.getCategory() == null ? event.getCategory() : categoryRepository.findById(request.getCategory()).get(),
-                request.getLocation() == null ? event.getLocation() : locationRepository.save(request.getLocation())
+                request.getLocation() == null ? event.getLocation() : locationRepository.save(LocationMapper.toLocation(request.getLocation()))
         );
         if (event.getState().equals(Constant.State.PUBLISHED)) {
             event.setPublishedOn(LocalDateTime.parse(LocalDateTime.now().format(Constant.FORMATTER), Constant.FORMATTER));

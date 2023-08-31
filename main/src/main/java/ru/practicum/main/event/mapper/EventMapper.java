@@ -4,10 +4,7 @@ import lombok.experimental.UtilityClass;
 import ru.practicum.Constant;
 import ru.practicum.main.category.mapper.CategoryMapper;
 import ru.practicum.main.category.model.Category;
-import ru.practicum.main.event.dto.EventFullDto;
-import ru.practicum.main.event.dto.EventShortDto;
-import ru.practicum.main.event.dto.NewEventDto;
-import ru.practicum.main.event.dto.UpdateEventRequest;
+import ru.practicum.main.event.dto.*;
 import ru.practicum.main.event.model.Event;
 import ru.practicum.main.event.model.Location;
 import ru.practicum.main.user.mapper.UserMapper;
@@ -17,7 +14,7 @@ import java.time.LocalDateTime;
 
 @UtilityClass
 public class EventMapper {
-    public static Event toEvent(NewEventDto newEventDto, Category category, Location location, User initiator) {
+    public Event toEvent(NewEventDto newEventDto, Category category, Location location, User initiator) {
         return Event
                 .builder()
                 .category(category)
@@ -35,7 +32,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static EventFullDto toFullEventDto(Event event) {
+    public EventFullDto toFullEventDto(Event event) {
         return EventFullDto
                 .builder()
                 .id(event.getId())
@@ -57,7 +54,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static EventFullDto toFullEventDto(Event event, long views, long confirmedRequests) {
+    public EventFullDto toFullEventDto(Event event, long views, long confirmedRequests) {
         return EventFullDto
                 .builder()
                 .id(event.getId())
@@ -79,7 +76,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static EventShortDto toShortEventDto(Event event) {
+    public EventShortDto toShortEventDto(Event event) {
         return EventShortDto
                 .builder()
                 .id(event.getId())
@@ -93,7 +90,7 @@ public class EventMapper {
 
     }
 
-    public static Event toEventUpdated(Event event, UpdateEventRequest request, Category category, Location location) {
+    public Event toEventUpdated(Event event, UpdateEventRequest request, Category category, Location location) {
         return Event
                 .builder()
                 .id(event.getId())
@@ -113,7 +110,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static Constant.State toState(Constant.StateAction action) {
+    public Constant.State toState(Constant.StateAction action) {
         if (action.equals(Constant.StateAction.SEND_TO_REVIEW)) {
             return Constant.State.PENDING;
         } else if (action.equals(Constant.StateAction.PUBLISH_EVENT)) {

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class CompilationMapper {
-    public static Compilation toCompilation(NewCompilationDto newCompilationDto, Set<Event> events) {
+    public Compilation toCompilation(NewCompilationDto newCompilationDto, Set<Event> events) {
         return Compilation
                 .builder()
                 .title(newCompilationDto.getTitle())
@@ -23,7 +23,7 @@ public class CompilationMapper {
                 .build();
     }
 
-    public static CompilationDto toCompilationDto(Compilation compilation) {
+    public CompilationDto toCompilationDto(Compilation compilation) {
         return CompilationDto
                 .builder()
                 .id(compilation.getId())

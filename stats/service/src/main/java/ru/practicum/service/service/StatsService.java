@@ -11,7 +11,6 @@ import ru.practicum.service.model.Stats;
 import ru.practicum.service.repository.StatsRepository;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +26,14 @@ public class StatsService {
     }
 
     @Transactional(readOnly = true)
-    public List<ViewStat> getAll(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
+    public List<ViewStat> getAll(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         if (end.isBefore(start)) throw new ValidateException("Время старта поиска не может быть позже времени окончания.");
         List<Stats> stats;
+        if (start.equals(LocalDateTime.of(1900, 1, 1, 0, 0))) {
+            return repository.findAllByUriIn(uris).stream()
+                .map(s -> new ViewStat(s.getApp(), s.getUri(), s.getHits()))
+                .collect(Collectors.toList());
+        }
         if (unique) {
             stats = uris == null || uris.isEmpty() ? repository.findByTimestampBetweenDistinct(start, end) :
                     repository.findByTimestampBetweenAndUriInDistinct(start, end, uris);
@@ -38,14 +42,7 @@ public class StatsService {
                     repository.findByTimestampBetweenAndUriIn(start, end, uris);
         }
         return stats.stream().map(s -> new ViewStat(s.getApp(), s.getUri(), s.getHits()))
-                .sorted(Comparator.comparingLong(ViewStat::getHits).reversed())
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public List<ViewStat> getAllForClient(List<String> uris) {
-        return repository.findAllByUriIn(uris).stream()
-                .map(s -> new ViewStat(s.getApp(), s.getUri(), s.getHits()))
-                .collect(Collectors.toList());
-    }
 }

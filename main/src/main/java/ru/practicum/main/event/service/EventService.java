@@ -28,7 +28,7 @@ public class EventService {
     }
 
     protected Map<Long, Long> getStats(List<Event> events) {
-        return stats.get(events.stream()
+        return stats.getAllForClient(events.stream()
                         .map(event -> "/events/" + event.getId())
                         .collect(Collectors.toList()))
                 .stream()

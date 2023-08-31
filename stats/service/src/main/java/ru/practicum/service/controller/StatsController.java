@@ -33,9 +33,4 @@ public class StatsController {
                                  @RequestParam(defaultValue = "false") boolean unique) {
         return service.getAll(start, end, uris, unique);
     }
-
-    @GetMapping("/client/stats")
-    public List<ViewStat> getAllFromClient(@RequestParam(required = false) List<String> uris) {
-        return service.getAllForClient(uris);
-    }
 }
