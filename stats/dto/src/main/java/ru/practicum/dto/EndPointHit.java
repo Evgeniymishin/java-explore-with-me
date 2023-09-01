@@ -2,12 +2,8 @@ package ru.practicum.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import ru.practicum.Constant;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -17,8 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EndPointHit {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     private String app;
@@ -27,6 +21,5 @@ public class EndPointHit {
     @NotNull
     private String ip;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constant.DATEFORMAT)
-    @DateTimeFormat(pattern = Constant.DATEFORMAT)
     private LocalDateTime timestamp;
 }

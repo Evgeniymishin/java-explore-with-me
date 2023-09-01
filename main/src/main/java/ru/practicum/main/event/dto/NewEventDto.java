@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.Constant;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
@@ -16,6 +17,7 @@ public class NewEventDto {
     @NotNull
     private Long category;
     @NotNull
+    @Valid
     private LocationDto location;
     @PositiveOrZero
     private int participantLimit = 0;
@@ -31,6 +33,7 @@ public class NewEventDto {
     @Size(min = 3, max = 120)
     private String title;
     @Future
+    @NotNull
     @JsonFormat(pattern = Constant.DATEFORMAT, shape = JsonFormat.Shape.STRING)
     private LocalDateTime eventDate;
 }
