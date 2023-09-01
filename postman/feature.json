@@ -195,6 +195,15 @@
 			"request": {
 				"method": "PATCH",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{request_body}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8080/users/:userId/events/:eventId/comments/:commentId",
 					"protocol": "http",
@@ -394,7 +403,12 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{{request_body}}"
+					"raw": "{{request_body}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:8080/admin/comments/:commentId",
