@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.Constant;
 import ru.practicum.client.StatsClient;
 import ru.practicum.main.category.repository.CategoryRepository;
+import ru.practicum.main.comment.dto.CommentDto;
+import ru.practicum.main.comment.repository.CommentRepository;
 import ru.practicum.main.event.dto.EventFullDto;
 import ru.practicum.main.event.dto.EventRequestByParams;
 import ru.practicum.main.event.dto.UpdateEventRequest;
@@ -31,8 +33,8 @@ public class AdminEventServiceImpl extends EventService implements AdminEventSer
     private final LocationRepository locationRepository;
 
     @Autowired
-    public AdminEventServiceImpl(RequestRepository requestRepository, CategoryRepository categoryRepository, EventRepository eventRepository, LocationRepository locationRepository, StatsClient stats) {
-        super(requestRepository, stats);
+    public AdminEventServiceImpl(RequestRepository requestRepository, CategoryRepository categoryRepository, EventRepository eventRepository, LocationRepository locationRepository, StatsClient stats, CommentRepository commentRepository) {
+        super(requestRepository, commentRepository, stats);
         this.eventRepository = eventRepository;
         this.categoryRepository = categoryRepository;
         this.locationRepository = locationRepository;
@@ -67,10 +69,12 @@ public class AdminEventServiceImpl extends EventService implements AdminEventSer
         }
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getStats(events);
+        Map<Long, List<CommentDto>> comments = getComments(events);
         return events.stream().map(event -> EventMapper.toFullEventDto(
                         event,
                         views.get(event.getId()) != null ? views.get(event.getId()) : 0,
-                        confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0
+                        confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0,
+                        comments.get(event.getId()) != null ? comments.get(event.getId()) : Collections.emptyList()
                 ))
                 .collect(Collectors.toList());
     }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.Constant;
 import ru.practicum.client.StatsClient;
+import ru.practicum.main.comment.dto.CommentDto;
+import ru.practicum.main.comment.repository.CommentRepository;
 import ru.practicum.main.event.dto.EventFullDto;
 import ru.practicum.main.event.dto.EventRequestByParams;
 import ru.practicum.main.event.mapper.EventMapper;
@@ -25,8 +27,8 @@ public class PublicEventServiceImpl extends EventService implements PublicEventS
     private final EventRepository eventRepository;
 
     @Autowired
-    public PublicEventServiceImpl(EventRepository eventRepository, RequestRepository requestRepository, StatsClient stats) {
-        super(requestRepository, stats);
+    public PublicEventServiceImpl(EventRepository eventRepository, RequestRepository requestRepository, StatsClient stats, CommentRepository commentRepository) {
+        super(requestRepository, commentRepository, stats);
         this.eventRepository = eventRepository;
     }
 
@@ -37,9 +39,11 @@ public class PublicEventServiceImpl extends EventService implements PublicEventS
         sendViews(servletRequest);
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(List.of(event));
         Map<Long, Long> views = getStats(List.of(event));
+        Map<Long, List<CommentDto>> comments = getComments(List.of(event));
         return EventMapper.toFullEventDto(event,
                 views.get(event.getId()) != null ? views.get(event.getId()) : 0,
-                confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0);
+                confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0,
+                comments.size() != 0 ? comments.get(eventId) : Collections.emptyList());
     }
 
     public List<EventFullDto> getAll(EventRequestByParams request, HttpServletRequest servletRequest) {
@@ -53,10 +57,12 @@ public class PublicEventServiceImpl extends EventService implements PublicEventS
         }
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getStats(events);
+        Map<Long, List<CommentDto>> comments = getComments(events);
         return events.stream().map(event -> EventMapper.toFullEventDto(
                         event,
                         views.get(event.getId()) != null ? views.get(event.getId()) : 0,
-                        confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0
+                        confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0,
+                        comments.get(event.getId()) != null ? comments.get(event.getId()) : Collections.emptyList()
                 ))
                 .sorted(request.getSort() != null && request.getSort().equals(Constant.UserRequestSort.VIEWS) ?
                         Comparator.comparingLong(EventFullDto::getViews) : EventFullDto::compareTo)
