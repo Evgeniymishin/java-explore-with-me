@@ -34,6 +34,7 @@ public class EventFullDto implements Comparable<EventFullDto> {
     private LocalDateTime eventDate;
     @JsonFormat(pattern = Constant.DATEFORMAT)
     private LocalDateTime publishedOn;
+    private Integer commentsCount;
 
     @Override
     public int compareTo(EventFullDto o) {

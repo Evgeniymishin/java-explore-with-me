@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.practicum.client.StatsClient;
 import ru.practicum.dto.EndPointHit;
 import ru.practicum.dto.ViewStat;
+import ru.practicum.main.comment.dto.CommentView;
+import ru.practicum.main.comment.repository.CommentRepository;
 import ru.practicum.main.event.model.Event;
 import ru.practicum.main.request.model.ConfirmedRequests;
 import ru.practicum.main.request.repository.RequestRepository;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EventService {
     private final RequestRepository requestRepository;
+    private final CommentRepository commentRepository;
     private final StatsClient stats;
 
     protected Map<Long, Integer> getConfirmedRequests(List<Event> events) {
@@ -44,5 +47,11 @@ public class EventService {
                 .ip(request.getRemoteAddr())
                 .timestamp(LocalDateTime.now())
                 .build());
+    }
+
+    protected Map<Long, Integer> getCommentCount(List<Event> events) {
+        return commentRepository.findRequestsByEventIds(events.stream().map(Event::getId)
+                        .collect(Collectors.toList()))
+                .stream().collect(Collectors.toMap(CommentView::getEventId, CommentView::getCount));
     }
 }

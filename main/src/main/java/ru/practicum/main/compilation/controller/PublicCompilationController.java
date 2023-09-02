@@ -1,5 +1,6 @@
 package ru.practicum.main.compilation.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(path = "/compilations")
 @Validated
+@Hidden
 public class PublicCompilationController {
     private final CompilationService service;
 

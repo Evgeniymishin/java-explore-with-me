@@ -54,7 +54,7 @@ public class EventMapper {
                 .build();
     }
 
-    public EventFullDto toFullEventDto(Event event, long views, long confirmedRequests) {
+    public EventFullDto toFullEventDto(Event event, long views, long confirmedRequests, Integer commentsCount) {
         return EventFullDto
                 .builder()
                 .id(event.getId())
@@ -73,6 +73,7 @@ public class EventMapper {
                 .createdOn(event.getCreatedOn())
                 .eventDate(event.getEventDate())
                 .publishedOn(event.getPublishedOn())
+                .commentsCount(commentsCount)
                 .build();
     }
 

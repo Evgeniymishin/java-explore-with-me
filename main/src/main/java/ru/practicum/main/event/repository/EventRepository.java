@@ -10,4 +10,6 @@ public interface EventRepository extends JpaRepository<Event, Long>, CustomEvent
     Boolean existsByCategoryId(Long categoryId);
 
     Page<Event> findEventsByInitiator(User user, Pageable pageable);
+
+
 }
