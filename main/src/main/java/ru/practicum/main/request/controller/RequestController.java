@@ -1,5 +1,6 @@
 package ru.practicum.main.request.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/users/{userId}/requests")
+@Hidden
 public class RequestController {
     private final RequestService service;
 

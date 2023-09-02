@@ -1,5 +1,6 @@
 package ru.practicum.main.category.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(path = "/categories")
 @Validated
+@Hidden
 public class PublicCategoryController {
 
     private final CategoryService service;
