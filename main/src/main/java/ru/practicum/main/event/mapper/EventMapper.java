@@ -4,7 +4,6 @@ import lombok.experimental.UtilityClass;
 import ru.practicum.Constant;
 import ru.practicum.main.category.mapper.CategoryMapper;
 import ru.practicum.main.category.model.Category;
-import ru.practicum.main.comment.dto.CommentDto;
 import ru.practicum.main.event.dto.*;
 import ru.practicum.main.event.model.Event;
 import ru.practicum.main.event.model.Location;
@@ -12,7 +11,6 @@ import ru.practicum.main.user.mapper.UserMapper;
 import ru.practicum.main.user.model.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @UtilityClass
 public class EventMapper {
@@ -56,7 +54,7 @@ public class EventMapper {
                 .build();
     }
 
-    public EventFullDto toFullEventDto(Event event, long views, long confirmedRequests, List<CommentDto> comments) {
+    public EventFullDto toFullEventDto(Event event, long views, long confirmedRequests, Integer commentsCount) {
         return EventFullDto
                 .builder()
                 .id(event.getId())
@@ -75,6 +73,7 @@ public class EventMapper {
                 .createdOn(event.getCreatedOn())
                 .eventDate(event.getEventDate())
                 .publishedOn(event.getPublishedOn())
+                .commentsCount(commentsCount)
                 .build();
     }
 

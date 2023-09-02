@@ -4,12 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.Constant;
 import ru.practicum.main.category.dto.CategoryDto;
-import ru.practicum.main.comment.dto.CommentDto;
 import ru.practicum.main.event.model.Location;
 import ru.practicum.main.user.dto.UserShortDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -36,7 +34,7 @@ public class EventFullDto implements Comparable<EventFullDto> {
     private LocalDateTime eventDate;
     @JsonFormat(pattern = Constant.DATEFORMAT)
     private LocalDateTime publishedOn;
-    private List<CommentDto> comments;
+    private Integer commentsCount;
 
     @Override
     public int compareTo(EventFullDto o) {

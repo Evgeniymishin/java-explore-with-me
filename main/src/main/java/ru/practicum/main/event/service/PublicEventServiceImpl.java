@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.Constant;
 import ru.practicum.client.StatsClient;
-import ru.practicum.main.comment.dto.CommentDto;
 import ru.practicum.main.comment.repository.CommentRepository;
 import ru.practicum.main.event.dto.EventFullDto;
 import ru.practicum.main.event.dto.EventRequestByParams;
@@ -39,11 +38,11 @@ public class PublicEventServiceImpl extends EventService implements PublicEventS
         sendViews(servletRequest);
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(List.of(event));
         Map<Long, Long> views = getStats(List.of(event));
-        Map<Long, List<CommentDto>> comments = getComments(List.of(event));
+        Map<Long, Integer> commentCount = getCommentCount(List.of(event));
         return EventMapper.toFullEventDto(event,
                 views.get(event.getId()) != null ? views.get(event.getId()) : 0,
                 confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0,
-                comments.size() != 0 ? comments.get(eventId) : Collections.emptyList());
+                commentCount.get(event.getId()) != null ? commentCount.get(event.getId()) : 0);
     }
 
     public List<EventFullDto> getAll(EventRequestByParams request, HttpServletRequest servletRequest) {
@@ -57,12 +56,12 @@ public class PublicEventServiceImpl extends EventService implements PublicEventS
         }
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getStats(events);
-        Map<Long, List<CommentDto>> comments = getComments(events);
+        Map<Long, Integer> commentCount = getCommentCount(events);
         return events.stream().map(event -> EventMapper.toFullEventDto(
                         event,
                         views.get(event.getId()) != null ? views.get(event.getId()) : 0,
                         confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0,
-                        comments.get(event.getId()) != null ? comments.get(event.getId()) : Collections.emptyList()
+                        commentCount.get(event.getId()) != null ? commentCount.get(event.getId()) : 0
                 ))
                 .sorted(request.getSort() != null && request.getSort().equals(Constant.UserRequestSort.VIEWS) ?
                         Comparator.comparingLong(EventFullDto::getViews) : EventFullDto::compareTo)

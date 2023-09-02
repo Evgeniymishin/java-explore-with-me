@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.Constant;
 import ru.practicum.client.StatsClient;
 import ru.practicum.main.category.repository.CategoryRepository;
-import ru.practicum.main.comment.dto.CommentDto;
 import ru.practicum.main.comment.repository.CommentRepository;
 import ru.practicum.main.event.dto.EventFullDto;
 import ru.practicum.main.event.dto.EventRequestByParams;
@@ -69,12 +68,12 @@ public class AdminEventServiceImpl extends EventService implements AdminEventSer
         }
         Map<Long, Integer> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getStats(events);
-        Map<Long, List<CommentDto>> comments = getComments(events);
+        Map<Long, Integer> commentCount = getCommentCount(events);
         return events.stream().map(event -> EventMapper.toFullEventDto(
                         event,
                         views.get(event.getId()) != null ? views.get(event.getId()) : 0,
                         confirmedRequests.get(event.getId()) != null ? confirmedRequests.get(event.getId()) : 0,
-                        comments.get(event.getId()) != null ? comments.get(event.getId()) : Collections.emptyList()
+                        commentCount.get(event.getId()) != null ? commentCount.get(event.getId()) : 0
                 ))
                 .collect(Collectors.toList());
     }
