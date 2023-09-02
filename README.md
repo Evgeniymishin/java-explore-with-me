@@ -15,3 +15,13 @@
 ### Получение комментариев
 * Получение конкретного комментария по его id
 * Получение списка комментариев по параметрам
+
+### Ссылки
+* Swagger
+```
+http://localhost:8080/swagger-ui/index.html
+```
+* Pull Request
+```
+https://github.com/Evgeniymishin/java-explore-with-me/pull/5
+```
